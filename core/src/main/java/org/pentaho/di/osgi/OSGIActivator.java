@@ -24,6 +24,7 @@ package org.pentaho.di.osgi;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Bundle;
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.osgi.service.tracker.BeanFactoryLookupServiceTracker;
 import org.pentaho.di.osgi.service.tracker.PdiPluginSupplementalClassMappingsTrackerForPluginRegistry;
@@ -69,6 +70,10 @@ public class OSGIActivator implements BundleActivator {
 
     // Make sure all activation is done BEFORE this call. It will block until all bundles are registered
     KarafLifecycleListener.getInstance().setBundleContext( bundleContext );
+    System.out.println("Dynamically loading a PDI Step ...");
+    Bundle bundle = bundleContext.installBundle("mvn:pentaho/pentaho-osgi-step-examples-step");
+    bundle.start();
+    System.out.println("Finished dynamically loading a PDI Step.");
   }
 
   public void stop( BundleContext bundleContext ) throws Exception {
